@@ -1,7 +1,11 @@
-from src.KNN import printhello
-import numpy as np
-import pandas as pd
-from src import *
+import csv
+# from src.KNN import printhello
 
-df = pd.read_csv("heart.csv","r")
-print(df.head)
+#open file
+csvfile = open("heart.csv", encoding="UTF-8")
+csvread = csv.reader(csvfile, delimiter=',')
+
+# print(csvread.line_num)
+for row in csvread:
+    print(len(row))
+    break
