@@ -40,14 +40,14 @@ def driverLogReg(lr, epoch, target):
 
     accuracy = 0
     for i in test:
-        print(log_reg_predict(coef, i, columnIndex[target]))
+        pred = log_reg_predict(coef, i, columnIndex[target])
         if(log_reg_predict(coef, i, columnIndex[target]) >= treshold1):
-            print("prediction :",1,"while actual value : ",i[13])
+            print("expected :",i[13],"predicted :",pred,"[1]")
         else:
-            print("prediction :",0,"while actual value : ",i[13])
+            print("expected :",i[13],"predicted :",pred,"[0]")
 
 
 
 #jalanin
 # driverKNN(8, 5, 'target')
-driverLogReg(0.01, 5, 'target')
+driverLogReg(0.1, 100, 'target')
