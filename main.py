@@ -41,16 +41,18 @@ def driverLogReg(lr, epoch, target):
     coef = train_logistic_regression(train, columnIndex[target], lr, epoch)
 
     accuracy = 0
+    print("final coefficients:")
     print(coef)
+    print()
     for i in test:
         pred = log_reg_predict(coef, i, columnIndex[target])
         if(pred >= treshold1):
-            print("expected :",i[13],"predicted :",pred,"[1]")
+            print("expected :",i[columnIndex[target]],"predicted :",pred,"[1]")
         else:
-            print("expected :",i[13],"predicted :",pred,"[0]")
+            print("expected :",i[columnIndex[target]],"predicted :",pred,"[0]")
 
 
 
 #jalanin
 # driverKNN(8, 5, 'target')
-driverLogReg(0.01, 20, 'target')
+driverLogReg(0.001, 10, 'target')

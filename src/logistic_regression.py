@@ -16,7 +16,8 @@ def rescale(train, minmax):
         for i in range (pnjng):
             row[i] = ((row[i])-minmax[i][0])/(minmax[i][1]-minmax[i][0])
 
-##REFINING COEFFICIENTS##
+#TODO it seems like it's faulty around here
+#REFINING COEFFICIENTS##
 def refineCoefficient(coeff, prediction, testEntry, labelIdx, lr):
     for i in range(len(coeff)):
         if(i != labelIdx+1):
@@ -59,12 +60,6 @@ def train_logistic_regression(train, labelIdx, lr, epochs):
 
         #print loss
         printLoss(prediction, stoc[0][labelIdx])
-
-        #print coefficients
-        for i in range(len(coefficients)):
-            coefficients[i] = round(coefficients[i], 4)
-        print("coefficients are now :")
-        print(coefficients)
         print()
     
     #function returns final coefficients
