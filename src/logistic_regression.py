@@ -1,25 +1,46 @@
-from math import exp
+from math import exp, sqrt
 from random import randint
 
 #it turns out that i haven't rescaled the attributes yet so it keeps getting Overflow error :'D
+##RESCALING##
 def minmaxValue(train):
     minmax = []
     for i in range (len(train[0])):
-        kolom = [kol[i] for kol in train]
-        minmax.append([float(min(kolom)), float(max(kolom))])
+        kolom = [(kol[i]) for kol in train]
+        minmax.append([min(kolom), max(kolom)])
     return minmax
 
 def rescale(train, minmax):
     pnjng = len(train[0])
     for row in train:
         for i in range (pnjng):
-            row[i] = (float(row[i])-minmax[i][0])/(minmax[i][1]-minmax[i][0])
+            row[i] = ((row[i])-minmax[i][0])/(minmax[i][1]-minmax[i][0])
 
+##REFINING COEFFICIENTS##
+def refineCoefficient(coeff, prediction, testEntry, labelIdx, lr):
+    for i in range(len(coeff)):
+        if(i != labelIdx+1):
+            if(i == 0):
+                coeff[i] += lr * ((testEntry[labelIdx])-prediction) * prediction * (1 - prediction)
+            else:
+                coeff[i] += lr * ((testEntry[labelIdx])-prediction) * prediction * (1 - prediction) * (testEntry[i-1])
+
+def log_reg_predict(coeff, entry, labelIdx):
+    topower = coeff[0]
+    for i in range (1,len(coeff)):
+        if(i != labelIdx+1):
+            topower += coeff[i]*(entry[i-1])
+    return (1/(1 + exp(-topower)))
+
+##COUNTING LOSS##
+def printLoss(predicted, actual):
+    print("loss is :",round(sqrt((predicted-actual)**2),4))
+
+##main?##
 def train_logistic_regression(train, labelIdx, lr, epochs):
     #set initial values for coefficients = 0
-    #coefficients[0] is b0 and setting labelIdx to -1 bc it doesnt have a coefficient
+    #coefficients[0] is b0
     coefficients = [0 for i in range (len(train[0])+1)]
-    coefficients[labelIdx+1] = -1
 
     #rescaling properties
     minmax = minmaxValue(train)
@@ -36,30 +57,15 @@ def train_logistic_regression(train, labelIdx, lr, epochs):
         print(prediction)
         refineCoefficient(coefficients, prediction, stoc[0], labelIdx, lr)
 
+        #print loss
+        printLoss(prediction, stoc[0][labelIdx])
+
         #print coefficients
         for i in range(len(coefficients)):
             coefficients[i] = round(coefficients[i], 4)
         print("coefficients are now :")
         print(coefficients)
+        print()
     
     #function returns final coefficients
     return coefficients
-
-def refineCoefficient(coeff, prediction, testEntry, labelIdx, lr):
-    for i in range(len(coeff)):
-        if(i != labelIdx+1):
-            if(i == 0):
-                coeff[i] += lr * (float(testEntry[labelIdx])-prediction) * prediction * (1 - prediction)
-            else:
-                coeff[i] += lr * (float(testEntry[labelIdx])-prediction) * prediction * (1 - prediction) * float(testEntry[i-1])
-
-def log_reg_predict(coeff, entry, labelIdx):
-    topower = coeff[0]
-    for i in range (1,len(coeff)):
-        if(i != labelIdx+1):
-            topower += coeff[i]*float(entry[i-1])
-    try:
-        return float(1/(1 + exp(-topower)))
-    except OverflowError:
-        print("Overflow gan idk")
-        print(topower)

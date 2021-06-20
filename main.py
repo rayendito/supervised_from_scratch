@@ -1,5 +1,6 @@
 import csv
 import random
+import numpy as np
 from math import floor
 from src.KNN import *
 from src.logistic_regression import *
@@ -7,8 +8,9 @@ from src.logistic_regression import *
 #open file
 read = list(csv.reader(open("heart.csv", mode='r', encoding='utf-8-sig')))
 column = read[:1]
-data = read[1:]
-random.shuffle(data)
+data = np.array(read[1:])
+data = data.astype(np.float64)
+np.random.shuffle(data)
 
 #create dictionary from column name
 columnIndex = {}
@@ -39,9 +41,10 @@ def driverLogReg(lr, epoch, target):
     coef = train_logistic_regression(train, columnIndex[target], lr, epoch)
 
     accuracy = 0
+    print(coef)
     for i in test:
         pred = log_reg_predict(coef, i, columnIndex[target])
-        if(log_reg_predict(coef, i, columnIndex[target]) >= treshold1):
+        if(pred >= treshold1):
             print("expected :",i[13],"predicted :",pred,"[1]")
         else:
             print("expected :",i[13],"predicted :",pred,"[0]")
@@ -50,4 +53,4 @@ def driverLogReg(lr, epoch, target):
 
 #jalanin
 # driverKNN(8, 5, 'target')
-driverLogReg(0.1, 100, 'target')
+driverLogReg(0.01, 20, 'target')
