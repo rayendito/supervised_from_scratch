@@ -5,6 +5,7 @@ import numpy as np
 from math import floor
 from src.KNN import *
 from src.logistic_regression import *
+from src.id3 import *
 
 #open file using pandas
 df = pd.read_csv (r'heart.csv')
@@ -19,7 +20,7 @@ np.random.shuffle(data)
 *with target (0/1)
 
 For categorical Attributes :
-sex cp fbs restcg exang slope ca thal target
+sex cp fbs restecg exang slope ca thal target
 
 For non-categorical Attributes :
 age trestbps chol thalach oldpeak target
@@ -52,7 +53,7 @@ def driverLogReg(lr, epoch, target):
     #test 10 aja
     test = data[:10]
     train = data[10:]
-    
+
     coef = train_logistic_regression(train, columnIndex[target], lr, epoch)
 
     accuracy = 0
@@ -66,7 +67,11 @@ def driverLogReg(lr, epoch, target):
         else:
             print("expected :",i[columnIndex[target]],"predicted :",pred,"[0]")
 
+def driverID3():
+    calcEntropy(toProcess, target)
+
 
 #jalanin
 # driverKNN(10, 5, target)
-driverLogReg(0.001, 10, target)
+# driverLogReg(0.001, 10, target)
+driverID3()
