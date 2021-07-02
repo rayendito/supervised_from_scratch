@@ -9,7 +9,7 @@ from src.logistic_regression import *
 #open file using pandas
 df = pd.read_csv (r'heart.csv')
 
-#input kolom yang bakal dimasukin
+#input kolom dan target yang bakal dimasukin
 koloms = [item for item in input("Masukkan kolom2 atribut : ").split()]
 target = input("Masukkan kolom target : ")
 toProcess = df[koloms]
@@ -33,7 +33,7 @@ for i in range (len(column)):
 
 def driverKNN(n, K, target):
     #split to predict the first n entries as if unlabeled
-    #ntar biar bisa liat akurasinya
+    #not actually test and train, cuma biar ntar bisa liat akurasinya
     test = data[:n]
     train = data[n:]
 
@@ -52,6 +52,7 @@ def driverLogReg(lr, epoch, target):
     #test 10 aja
     test = data[:10]
     train = data[10:]
+    
     coef = train_logistic_regression(train, columnIndex[target], lr, epoch)
 
     accuracy = 0
@@ -67,5 +68,5 @@ def driverLogReg(lr, epoch, target):
 
 
 #jalanin
-driverKNN(8, 5, target)
-# driverLogReg(0.001, 10, target)
+# driverKNN(10, 5, target)
+driverLogReg(0.001, 10, target)
