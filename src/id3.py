@@ -19,9 +19,9 @@ def calcEntropyAtr(dataFrem, attribute, target):
     classEntropy = 0
     for kelas in classes:
         entropyEachKelas = 0
+        den = len(dataFrem[attribute][dataFrem[attribute] == kelas])
         for goal in goals:
             num = len(dataFrem[attribute][dataFrem[attribute] == kelas][dataFrem[target] == goal])
-            den = len(dataFrem[attribute][dataFrem[attribute] == kelas])
             fraction = num/(den+eps)
             entropyEachKelas += -fraction*np.log2(fraction+eps) #This calculates entropy for one feature like 'Sweet'
         fraction2 = den/len(dataFrem)
