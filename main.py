@@ -7,12 +7,19 @@ from src.KNN import *
 from src.logistic_regression import *
 from src.id3 import *
 
-#open file using pandas
+#open file using pandas and shuffle
 df = pd.read_csv (r'heart.csv')
+df = df.sample(frac=1).reset_index(drop=True)
 
 #input kolom dan target yang bakal dimasukin
-koloms = [item for item in input("Masukkan kolom2 atribut : ").split()]
-target = input("Masukkan kolom target : ")
+# UNCOMMENT WHEN DONE
+# koloms = [item for item in input("Masukkan kolom2 atribut : ").split()]
+# target = input("Masukkan kolom target : ")
+
+# DELETE WHEN DONE
+koloms = ['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal', 'target']
+target = 'target'
+
 toProcess = df[koloms]
 data = toProcess.values.tolist()
 np.random.shuffle(data)
@@ -68,7 +75,8 @@ def driverLogReg(lr, epoch, target):
             print("expected :",i[columnIndex[target]],"predicted :",pred,"[0]")
 
 def driverID3():
-    calcEntropy(toProcess, target)
+    test = calcEntropy(toProcess, target)
+    print("Entropy is:", test)
 
 
 #jalanin
