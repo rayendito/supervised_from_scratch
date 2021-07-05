@@ -15,10 +15,10 @@ from src.id3 import *
 # target = input("Masukkan kolom target : ")
 
 # DELETE WHEN DONE
-dataset = "dataset.csv"
+dataset = "heart.csv"
 raw_string = r"{}".format(dataset)
-koloms = ['X1', 'X2', 'Y']
-target = 'Y'
+koloms = ['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal', 'target']
+target = 'target'
 
 #open file using pandas and shuffle
 df = pd.read_csv (raw_string)
@@ -80,10 +80,11 @@ def driverLogReg(lr, epoch, target):
 
 def driverID3():
     test = calcEntropy(toProcess, target)
-    print("Entropy is:", test)
+    bbb = attributeIGs(toProcess, target)
+    print(bbb)
 
 
 #jalanin
 # driverKNN(10, 5, target)
-driverLogReg(0.1, 150, target)
-# driverID3()
+# driverLogReg(0.1, 150, target)
+driverID3()

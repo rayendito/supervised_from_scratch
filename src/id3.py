@@ -1,4 +1,5 @@
 import numpy as np
+from pandas.core.frame import DataFrame
 
 #entropy dataset
 def calcEntropy(dataFrem, target):
@@ -32,6 +33,19 @@ def calcEntropyAtr(dataFrem, attribute, target):
 
     return(abs(classEntropy))
 
+
+def entropies(dataFream, target):
+    halo = {}
+    for i in list(dataFream.columns):
+        halo[i] = calcEntropyAtr(dataFream, i, target)
+    return halo
+
+def attributeIGs(df, target):
+    dataEnt = calcEntropy(df, target)
+    entroDict = entropies(df, target)
+    for i in list(df.columns):
+        entroDict[i] = dataEnt - entroDict[i]
+    return entroDict
 
 def calcInfoGain():
     print("aaaaa")
