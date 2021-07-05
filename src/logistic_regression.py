@@ -14,7 +14,10 @@ def rescale(train, minmax):
     pnjng = len(train[0])
     for row in train:
         for i in range (pnjng):
-            row[i] = ((row[i])-minmax[i][0])/(minmax[i][1]-minmax[i][0])
+            try:
+                row[i] = ((row[i])-minmax[i][0])/(minmax[i][1]-minmax[i][0])
+            except:
+                print(minmax[i][1],minmax[i][0])
 
 #REFINING COEFFICIENTS##
 def refineCoefficient(coeff, prediction, testEntry, labelIdx, lr):

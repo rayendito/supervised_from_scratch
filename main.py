@@ -7,18 +7,22 @@ from src.KNN import *
 from src.logistic_regression import *
 from src.id3 import *
 
-#open file using pandas and shuffle
-df = pd.read_csv (r'heart.csv')
-df = df.sample(frac=1).reset_index(drop=True)
-
 #input kolom dan target yang bakal dimasukin
 # UNCOMMENT WHEN DONE
+# dataset = input("Masukkan nama file dataset : ")
+# raw_string = r"{}".format(dataset)
 # koloms = [item for item in input("Masukkan kolom2 atribut : ").split()]
 # target = input("Masukkan kolom target : ")
 
 # DELETE WHEN DONE
-koloms = ['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal', 'target']
-target = 'target'
+dataset = "dataset.csv"
+raw_string = r"{}".format(dataset)
+koloms = ['X1', 'X2', 'Y']
+target = 'Y'
+
+#open file using pandas and shuffle
+df = pd.read_csv (raw_string)
+df = df.sample(frac=1).reset_index(drop=True)
 
 toProcess = df[koloms]
 data = toProcess.values.tolist()
@@ -58,8 +62,8 @@ def driverLogReg(lr, epoch, target):
     treshold1 = 0.5
 
     #test 10 aja
-    test = data[:10]
-    train = data[10:]
+    test = data[:8]
+    train = data[8:]
 
     coef = train_logistic_regression(train, columnIndex[target], lr, epoch)
 
@@ -81,5 +85,5 @@ def driverID3():
 
 #jalanin
 # driverKNN(10, 5, target)
-# driverLogReg(0.001, 10, target)
-driverID3()
+driverLogReg(0.1, 150, target)
+# driverID3()
