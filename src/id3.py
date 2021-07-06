@@ -45,7 +45,32 @@ def attributeIGs(df, target):
     entroDict = entropies(df, target)
     for i in list(df.columns):
         entroDict[i] = dataEnt - entroDict[i]
+
+    del entroDict[target]
     return entroDict
 
-def calcInfoGain():
-    print("aaaaa")
+def buildTree(df, target):
+    # dictionary to return
+    retval = {}
+
+    # information gains
+    ditc = attributeIGs(df, target)
+    max_atr = max(ditc, key=ditc.get)
+    retval.update({max_atr : {}})
+    classes = df[max_atr].unique()
+
+    if(len(ditc) == 1):
+        for kelas in classes:
+            a = df[target][df[max_atr] == kelas]
+            retval.get(max_atr).update({kelas : a.mode()})
+    else:
+        for kelas in classes:
+            a = df[target][df[max_atr] == kelas].unique()
+            if(len(a) == 1):
+                ditc.update({kelas : a[0]})
+            else:
+                for i in a:
+                    new = df[df[max_atr] == a]
+                    ditc.update({kelas : buildTree(new, target)})
+
+    return retval

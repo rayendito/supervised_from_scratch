@@ -79,12 +79,16 @@ def driverLogReg(lr, epoch, target):
             print("expected :",i[columnIndex[target]],"predicted :",pred,"[0]")
 
 def driverID3():
-    test = calcEntropy(toProcess, target)
-    bbb = attributeIGs(toProcess, target)
-    print(bbb)
+    buildTree(toProcess, target)
 
 
 #jalanin
 # driverKNN(10, 5, target)
 # driverLogReg(0.1, 150, target)
 driverID3()
+
+# dic = {'wkwkw' : {'aaa' : 1111,
+#                     'bbb' : 2222}}
+# dic['wkwkw']['cok'] = 3
+
+# print(dic.get('wkwkw').get('cok'))
