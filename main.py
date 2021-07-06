@@ -79,7 +79,7 @@ def driverLogReg(lr, epoch, target):
             print("expected :",i[columnIndex[target]],"predicted :",pred,"[0]")
 
 def driverID3():
-    a = buildTree(toProcess, target)
+    a = buildTree(toProcess, target, [target])
     print(a)
 
 

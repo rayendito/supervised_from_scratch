@@ -49,13 +49,21 @@ def attributeIGs(df, target):
     del entroDict[target]
     return entroDict
 
-def buildTree(df, target):
+def buildTree(df, target, udah):
     # dictionary to return
     retval = {}
 
     # information gains
     ditc = attributeIGs(df, target) #column-ig
+    
+    #which we talking abt now
     max_atr = max(ditc, key=ditc.get) #column
+    while (max_atr in udah and len(ditc) > 1):
+        del ditc[max_atr]
+        max_atr = max(ditc, key=ditc.get)
+    udah.append(max_atr)
+
+    #initialize
     retval.update({max_atr : {}})
     classes = df[max_atr].unique()
     
@@ -71,6 +79,6 @@ def buildTree(df, target):
             else:
                 new = df[df[max_atr] == kelas]
                 new = new.drop(columns=max_atr)
-                retval[max_atr][kelas] = buildTree(new, target)
+                retval[max_atr][kelas] = buildTree(new, target, udah)
 
     return retval
