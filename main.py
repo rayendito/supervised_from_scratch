@@ -79,7 +79,8 @@ def driverLogReg(lr, epoch, target):
             print("expected :",i[columnIndex[target]],"predicted :",pred,"[0]")
 
 def driverID3():
-    buildTree(toProcess, target)
+    a = buildTree(toProcess, target)
+    print(a)
 
 
 #jalanin
