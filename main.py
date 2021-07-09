@@ -7,18 +7,19 @@ from src.KNN import *
 from src.logistic_regression import *
 from src.id3 import *
 
-#input kolom dan target yang bakal dimasukin
+# input kolom dan target yang bakal dimasukin
 # UNCOMMENT WHEN DONE
-# dataset = input("Masukkan nama file dataset : ")
-# raw_string = r"{}".format(dataset)
-# koloms = [item for item in input("Masukkan kolom2 atribut : ").split()]
-# target = input("Masukkan kolom target : ")
+dataset = input("Masukkan nama file dataset : ")
+raw_string = r"{}".format(dataset)
+koloms = [item for item in input("Masukkan kolom2 atribut : ").split()]
+target = input("Masukkan kolom target : ")
+algoritma = input("Algoritma supervised (KNN, logres, id3) : ")
 
 # DELETE WHEN DONE
-dataset = "heart.csv"
-raw_string = r"{}".format(dataset)
-koloms = ['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal', 'target']
-target = 'target'
+# dataset = "heart.csv"
+# raw_string = r"{}".format(dataset)
+# koloms = ['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal', 'target']
+# target = 'target'
 
 #open file using pandas and shuffle
 df = pd.read_csv (raw_string)
@@ -58,12 +59,13 @@ def driverKNN(n, K, target):
     print("accuracy is",(float(accuracy)/n*100),"%")
 
 def driverLogReg(lr, epoch, target):
-    #set treshold
+    # dataset heart aga aneh, dont use
+    # set treshold
     treshold1 = 0.5
 
     #test 10 aja
-    test = data[:8]
-    train = data[8:]
+    test = data[:10]
+    train = data[10:]
 
     coef = train_logistic_regression(train, columnIndex[target], lr, epoch)
 
@@ -80,16 +82,20 @@ def driverLogReg(lr, epoch, target):
 
 def driverID3():
     a = buildTree(toProcess, target, [target])
+    print("Tree generated : ")
     print(a)
 
 
-#jalanin
-# driverKNN(10, 5, target)
-# driverLogReg(0.1, 150, target)
-driverID3()
+def main(algo):
+    if (algo == "KNN"):
+        n = int(input("Masukkan n test : "))
+        k = int(input("Masukkan jumlah neighbors : "))
+        driverKNN(n, k, target)
+    elif (algo == "logres"):
+        lr = int(input("Masukkan learning rate test : "))
+        epoch = int(input("Masukkan jumlah epochs : "))
+        driverLogReg(lr, epoch, target)
+    elif (algo == "id3"):
+        driverID3()
 
-# dic = {'wkwkw' : {'aaa' : 1111,
-#                     'bbb' : 2222}}
-# dic['wkwkw']['cok'] = 3
-
-# print(dic.get('wkwkw').get('cok'))
+main(algoritma)

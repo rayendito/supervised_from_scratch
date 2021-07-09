@@ -82,3 +82,5 @@ def buildTree(df, target, udah):
                 retval[max_atr][kelas] = buildTree(new, target, udah)
 
     return retval
+    
+
